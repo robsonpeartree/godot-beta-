@@ -4,27 +4,44 @@
 [ext_resource type="Script" path="res://scripts/open_world_generator.gd" id="2_world_script"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_main"]
-sky_top_color = Color(0.22, 0.45, 0.9, 1)
-sky_horizon_color = Color(0.7, 0.8, 1, 1)
+sky_top_color = Color(0.18, 0.38, 0.82, 1)
+sky_horizon_color = Color(0.85, 0.9, 1, 1)
+ground_bottom_color = Color(0.16, 0.18, 0.16, 1)
+energy_multiplier = 1.2
+sun_angle_max = 40.0
 
-[node name="Main" type="Node3D"]
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.866025, -0.5, 0, 0.353553, 0.612372, -0.707107, 0.353553, 0.612372, 0.707107, 0, 25, 0)
-light_energy = 1.4
-shadow_enabled = true
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-
-environment = SubResource("Environment_main")
+[sub_resource type="Sky" id="Sky_main"]
+sky_material = SubResource("ProceduralSkyMaterial_main")
 
 [sub_resource type="Environment" id="Environment_main"]
 background_mode = 2
 sky = SubResource("Sky_main")
 ambient_light_source = 3
+ambient_light_energy = 1.0
+ssao_enabled = true
+ssao_radius = 1.8
+ssao_intensity = 2.0
+fog_enabled = true
+fog_light_color = Color(0.75, 0.82, 0.9, 1)
+fog_density = 0.0045
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.03
+adjustment_enabled = true
+adjustment_brightness = 1.05
+adjustment_contrast = 1.08
+adjustment_saturation = 1.08
 
-[sub_resource type="Sky" id="Sky_main"]
-sky_material = SubResource("ProceduralSkyMaterial_main")
+[node name="Main" type="Node3D"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.866025, -0.5, 0, 0.353553, 0.612372, -0.707107, 0.353553, 0.612372, 0.707107, 0, 60, 0)
+light_energy = 2.0
+light_indirect_energy = 1.0
+shadow_enabled = true
+sky_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_main")
 
 [node name="OpenWorld" type="Node3D" parent="."]
 script = ExtResource("2_world_script")
